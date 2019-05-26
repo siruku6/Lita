@@ -5,20 +5,65 @@
     <title>ColorPainterBase</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="./color_painter.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      .main {
+        background-color: white;
+        margin: 100px 20px 20px;
+      }
+      .main-title {
+        background-color: blue;
+        color: white;
+        height: 40px;
+        width: 100%;
+      }
+      .main-body {
+        padding: 15px;
+      }
+      .second-frame {
+        background-color: white;
+        /* margin: 20px; */
+      }
+      .second-title {
+        background-color: red;
+        color: white;
+        height: 40px;
+        width: 100%;
+      }
+      header {
+        background-color: rgb(0,0,0);
+        color: white;
+        position: absolute;
+        top: 0;
+        height: 80px;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
-    <button id="btn">開始ボタンだよ</button>
-    <div>
-      <p>かーびぃとちーびぃ</p>
-      <table class="table table-bordered table-hover">
-        <tr>
-          <th>列１</th><th>列２</th>
-        </tr>
-        <tr>
-          <td>もじ</td><td>かめ</td>
-        </tr>
-      </table>
+    <header><h2>タイトル</h2></header>
+
+    <div class="main">
+      <div class="main-title"><h3>カードタイトル</h3></div>
+      <div class="main-body">
+        <button id="btn">開始ボタンだよ</button>
+
+        <div class="second-frame">
+          <p class="second-title">かーびぃとちーびぃ</p>
+          <table class="table table-bordered table-hover">
+            <tr>
+              <th>列１</th><th>列２</th>
+            </tr>
+            <tr>
+              <td>もじ</td><td>かめ</td>
+            </tr>
+          </table>
+        </div>
+
+        <button id="paint">Litaに呼びかける</button>
+      </div>
     </div>
-    <button id="paint">Litaに呼びかける</button>
   </body>
 </html>

@@ -1,6 +1,7 @@
 /* TODO: Extract Lita-class from ColorPainter-class */
 var ColorPainter = {
   Lita: '',
+  $pattern_select_box: '',
   $target_object: [],
   target_selectors: [],
   array_$target_displays: [],
@@ -15,17 +16,26 @@ var ColorPainter = {
   },
   // initialize Lita-window
   ready_for_the_performance: function() {
+    ColorPainter.$pattern_select_box = $('select#pattern');
     ColorPainter.set_default_target();
     for (var i = 0; i < 4; i++) {
       ColorPainter.array_$target_displays.push($(`.target-${i}`));
       if (ColorPainter.$target_object[i].length > 0) {
+        // TODO: ほとんどLita-windowに表示されない
         ColorPainter.array_$target_displays[i].html(
           ColorPainter.$target_object[i][0].localName
         );
       }
     }
-    $.each(ColorLake.default, function(i, color_pattern) {
-      $('select#pattern').append(`<option value="${i}">${i}</option>`);
+    $.each(ColorLake, function(key, theme) {
+      $('select#color-theme').append(`<option value="${key}">${key}</option>`);
+    });
+    ColorPainter.change_color_theme('default');
+  },
+  change_color_theme: function(theme_name){
+    ColorPainter.$pattern_select_box.html('');
+    $.each(ColorLake[theme_name], function(i, color_pattern) {
+      ColorPainter.$pattern_select_box.append(`<option value="${i}">${i}</option>`);
     });
   },
   talk_to_Lita: function() {
@@ -41,16 +51,12 @@ var ColorPainter = {
     }
   },
   set_default_target: function() {
-    ColorPainter.$target_object[0] = $('p');
-    ColorPainter.$target_object[1] = $('div');
-    ColorPainter.$target_object[2] = $('body');
-    ColorPainter.$target_object[3] = $('span');
-
-    // TODO: object と selector の相互変換
-    ColorPainter.target_selectors[0] = 'p';
-    ColorPainter.target_selectors[1] = 'div';
-    ColorPainter.target_selectors[2] = 'body';
-    ColorPainter.target_selectors[3] = 'span';
+    selectors = ['header', 'div.main-title', 'p.second-title', 'body']
+    $.each(selectors, function(i, selector){
+      // TODO: object と selector の相互変換
+      ColorPainter.$target_object[i] = $(selector);
+      ColorPainter.target_selectors[i] = selector;
+    });
   },
   set_target: function($target, i) {
     ColorPainter.$target_object[i] = $target;
@@ -60,8 +66,13 @@ var ColorPainter = {
   },
   pa_all_targets: function() {
     var $parent = $(window.opener.document);
-    var color_ID = Number($('select#pattern > option:selected').val());
-    var color_pattern = ColorLake['default'][color_ID];
+    var theme_name = $('select#color-theme > option:selected').val()
+    var color_ID = Number(ColorPainter.$pattern_select_box.find('option:selected').val());
+    var color_pattern = ColorLake[theme_name][color_ID];
+    if (typeof color_pattern === 'undefined') {
+      alert('There is no color pattern !')
+      return
+    }
     $.each(ColorPainter.target_selectors, function(i, selector) {
       $parent.find(selector).attr('style', `background-color: rgb(${color_pattern[i]});`);
     });
@@ -71,8 +82,7 @@ var ColorPainter = {
 // Main
 $(function(){
   $.getScript('./color_lake.js', function() {
-    console.log(ColorLake.default);
-
+    // console.log(ColorLake.default);
     if ($('#Lita').length === 0) {
       ColorPainter.call_Lita()
     	return false;
@@ -89,6 +99,10 @@ $(function(){
       // Paint targets on parent-window
       ColorPainter.pa_all_targets()
     }
+  });
+
+  $(document).on('change', 'select#color-theme', function(){
+    ColorPainter.change_color_theme(this.value);
   });
 
   // TODO: 親windowの要素をクリックすることで、色変更対象を変更できるようにする
