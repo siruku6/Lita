@@ -14,20 +14,18 @@ jQuery
 ### Generally
 1. Put `painter_bell.js` in your javascripts directory.
 1. Copy `Lita` directory in your app's root directory.
-1. Read `painter_bell.js` in your html.
+1. Read `painter_bell.js` in your html.  
 For example ...
-    ```html
-    <script src="./painter_bell.js"></script>
-    ```
+```html
+<script src="./painter_bell.js"></script>
+```
 
 ### Ruby on Rails
-If you use Ruby on Rails ...
-    ```
-    # good
-    app/assets/javascripts/painter_bell.js
-
-    ...
-
-    public
-      └ Lita/
-    ```
+If you use Ruby on Rails ...  
+```
+# good
+app/assets/javascripts/painter_bell.js
+...
+public
+  └ Lita/
+```
