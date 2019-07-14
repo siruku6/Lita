@@ -14,7 +14,7 @@ var PaintTool = {
 
     var target_size = PaintTool.target_selectors.length;
     for (var i = 0; i < target_size; i++) {
-      PaintTool.array_$target_displays.push($(`.target-${i}`));
+      PaintTool.array_$target_displays.push($(`#target-${i} > .selector`));
       PaintTool.array_$target_displays[i].html(
         PaintTool.target_selectors[i]
       );
