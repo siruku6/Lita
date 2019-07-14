@@ -3,7 +3,6 @@ var PaintTool = {
   $theme_select_box: '',
   $pattern_select_box: '',
   target_selectors: [],
-  array_$target_displays: [],
 
   // initialize Lita-window
   ready_for_the_performance: function() {
@@ -14,10 +13,7 @@ var PaintTool = {
 
     var target_size = PaintTool.target_selectors.length;
     for (var i = 0; i < target_size; i++) {
-      PaintTool.array_$target_displays.push($(`#target-${i} > .selector`));
-      PaintTool.array_$target_displays[i].html(
-        PaintTool.target_selectors[i]
-      );
+      $(`#target-${i} > .selector`).html(PaintTool.target_selectors[i]);
     }
     PaintTool.$theme_select_box.html('');
     var index = 0;
@@ -61,6 +57,7 @@ var PaintTool = {
     }
     $.each(PaintTool.target_selectors, function(i, selector) {
       $parent.find(selector).attr('style', `background-color: rgb(${color_pattern[i]}) !important;`);
+      $(`#target-${i} > .color`).attr('style', `background-color: rgb(${color_pattern[i]});`);
     });
   }
 };
