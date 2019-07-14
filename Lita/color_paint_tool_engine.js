@@ -2,7 +2,6 @@
 var PaintTool = {
   $theme_select_box: '',
   $pattern_select_box: '',
-  $target_object: [],
   target_selectors: [],
   array_$target_displays: [],
   resetting_target_num: null,
@@ -13,14 +12,13 @@ var PaintTool = {
     PaintTool.$theme_select_box = $('select#color-theme');
 
     PaintTool.set_default_target();
-    for (var i = 0; i < 4; i++) {
+
+    var target_size = PaintTool.target_selectors.length;
+    for (var i = 0; i < target_size; i++) {
       PaintTool.array_$target_displays.push($(`.target-${i}`));
-      if (PaintTool.$target_object[i].length > 0) {
-        // TODO: ほとんどLita-windowに表示されない
-        PaintTool.array_$target_displays[i].html(
-          PaintTool.$target_object[i][0].localName
-        );
-      }
+      PaintTool.array_$target_displays[i].html(
+        PaintTool.target_selectors[i]
+      );
     }
     PaintTool.$theme_select_box.html('');
     var index = 0;
@@ -41,27 +39,25 @@ var PaintTool = {
     console.log($Lita.find('select'));
     $Lita.find('div#chat-space').append('<p>おーい、りたー(`・ワ・´)</p>');
   },
-  switch_resetting_target: function(i) {
-    if (PaintTool.resetting_target_num === null) {
-      PaintTool.resetting_target_num = i;
-    } else {
-      PaintTool.resetting_target_num = null;
-    }
-  },
+  // switch_resetting_target: function(i) {
+  //   if (PaintTool.resetting_target_num === null) {
+  //     PaintTool.resetting_target_num = i;
+  //   } else {
+  //     PaintTool.resetting_target_num = null;
+  //   }
+  // },
   set_default_target: function() {
     selectors = ['header', 'div.main-title', 'p.second-title', 'body'];
     $.each(selectors, function(i, selector){
-      // TODO: object と selector の相互変換
-      PaintTool.$target_object[i] = $(selector);
       PaintTool.target_selectors[i] = selector;
     });
   },
-  set_target: function($target, i) {
-    PaintTool.$target_object[i] = $target;
-  },
-  paint_target: function(rgb, i) {
-    PaintTool.$target_object[i].attr('style', `background-color: rgb(${rgb});`);
-  },
+  // set_target: function($target, i) {
+  //   PaintTool.$target_objects[i] = $target;
+  // },
+  // paint_target: function(rgb, i) {
+  //   PaintTool.$target_objects[i].attr('style', `background-color: rgb(${rgb});`);
+  // },
   paint_all_target: function() {
     var $parent = $(window.opener.document);
     var theme_name = $('select#color-theme > option:selected').html()

@@ -1,14 +1,35 @@
 /* * * * * * * * * * * * * * * *
          Event Drivers
  * * * * * * * * * * * * * * * */
+var Alert = {
+  $theme_message: '',
+  $pattern_message: '',
+
+  set_messages_obj: function() {
+    Alert.$theme_message = $('#theme-message');
+    Alert.$pattern_message = $('#pattern-message');
+  },
+  last_theme: function() {
+    Alert.$theme_message.html('ごめんね、これが最後のテーマだよ><');
+  },
+  last_pattern: function() {
+    Alert.$pattern_message.html('ごめんね、これが最後のカラーパターンだよ><');
+  },
+  rm_messages: function() {
+    Alert.$theme_message.html('');
+    Alert.$pattern_message.html('');
+  }
+}
+
 $(function(){
   // When loading HTML is finished ...
   $.getScript('./color_lake.js', function() {
     // console.log(ColorLake.default);
     if ($('#Lita').length !== 0) {
       PaintTool.ready_for_the_performance();
-      alert('Lita is ready !');
       PaintTool.paint_all_target();
+      Alert.set_messages_obj();
+      alert('Lita is ready !');
     }
   });
 
@@ -37,14 +58,21 @@ $(function(){
   $(document).on('keydown', function(e){
     if (!('originalEvent' in e)) { return; }
 
-    var old_theme_num   = Number(PaintTool.$theme_select_box.children("option:selected").val());
+    var theme_last_id   = Number(PaintTool.$theme_select_box.children('option').last().val());
+    var old_theme_num   = Number(PaintTool.$theme_select_box.children('option:selected').val());
+    var pattern_last_id = Number(PaintTool.$pattern_select_box.children('option').last().val());
     var old_pattern_num = Number(PaintTool.$pattern_select_box.children("option:selected").val());
+
+    Alert.rm_messages();
     if (e.originalEvent.code === 'ArrowLeft') {
       if (old_theme_num === 0) { return }
 
       PaintTool.$theme_select_box.val(old_theme_num - 1).change();
     } else if (e.originalEvent.code === 'ArrowRight') {
-      // TODO: if last number is selected, return
+      if (old_theme_num === theme_last_id) {
+        Alert.last_theme();
+        return
+      }
 
       PaintTool.$theme_select_box.val(old_theme_num + 1).change();
     } else if (e.originalEvent.code === 'ArrowUp') {
@@ -52,7 +80,10 @@ $(function(){
 
       PaintTool.$pattern_select_box.val(old_pattern_num - 1).change();
     } else if (e.originalEvent.code === 'ArrowDown') {
-      // TODO: if last number is selected, return
+      if (old_pattern_num === pattern_last_id) {
+        Alert.last_pattern();
+        return
+      }
 
       PaintTool.$pattern_select_box.val(old_pattern_num + 1).change();
     }
