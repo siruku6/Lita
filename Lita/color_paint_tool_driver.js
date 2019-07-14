@@ -108,12 +108,4 @@ $(function(){
   //   //
   // 	// }
   // });
-
-  // $(document).on('click', '.reset-switch', function() {
-  //   if (PaintTool.resetting_target_num !== null) { return }
-  //   alert('Select target-element which you want to paint !')
-  //
-  //   var target_num = event.target.innerHTML
-  //   PaintTool.resetting_target_num = target_num
-  // });
 });

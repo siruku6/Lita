@@ -4,7 +4,6 @@ var PaintTool = {
   $pattern_select_box: '',
   target_selectors: [],
   array_$target_displays: [],
-  resetting_target_num: null,
 
   // initialize Lita-window
   ready_for_the_performance: function() {
@@ -39,13 +38,6 @@ var PaintTool = {
     console.log($Lita.find('select'));
     $Lita.find('div#chat-space').append('<p>おーい、りたー(`・ワ・´)</p>');
   },
-  // switch_resetting_target: function(i) {
-  //   if (PaintTool.resetting_target_num === null) {
-  //     PaintTool.resetting_target_num = i;
-  //   } else {
-  //     PaintTool.resetting_target_num = null;
-  //   }
-  // },
   set_default_target: function() {
     selectors = ['header', 'div.main-title', 'p.second-title', 'body'];
     $.each(selectors, function(i, selector){
