@@ -1,4 +1,6 @@
 /* TODO: Extract Lita-class from PaintTool-class */
+import ColorLake from 'color_lake.js';
+
 var PaintTool = {
   $theme_select_box: '',
   $pattern_select_box: '',

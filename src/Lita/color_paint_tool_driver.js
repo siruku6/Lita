@@ -1,3 +1,5 @@
+import ColorLake from 'color_lake.js';
+
 /* * * * * * * * * * * * * * * *
          Event Drivers
  * * * * * * * * * * * * * * * */
@@ -23,15 +25,15 @@ var Alert = {
 
 $(function(){
   // When loading HTML is finished ...
-  $.getScript('./color_lake.js', function() {
-    // console.log(ColorLake.default);
+  // $.getScript('./color_lake.js', function() {
+    console.log(ColorLake.default);
     if ($('#Lita').length !== 0) {
       PaintTool.ready_for_the_performance();
       PaintTool.paint_all_target();
       Alert.set_messages_obj();
       alert('Lita is ready !');
     }
-  });
+  // });
 
   // unused ...
   // $(document).on('click', '#paint', function(){
